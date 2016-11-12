@@ -108,7 +108,7 @@ class ResourceMonitor {
             this.warnings[user.userid]++;
             this.settings.moderate(user.userid, this.warnings[user.userid]);
             //search for patterns
-            for (var let in this.users[user.userid]) {
+            for (let cmd in this.users[user.userid]) {
                 if (this.users[user.userid][cmd] > 6) {
                     this.setPattern(cmd);
                 }
