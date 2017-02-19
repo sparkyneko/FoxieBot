@@ -1,17 +1,17 @@
 'use strict';
 let receiveMail = function (user) {
-    let myMail = Db("mail").get(user.userid, []);
+    let myMail = Db.mail.get(user.userid, []);
     if (!myMail.length) return false;
     myMail.forEach(function(m) {
         user.sendTo("[" + getEST(m.date) + " EST] " + m.from + ": " + m.message);
     });
-    Db("mail").set(user.userid, []);
+    Db.mail.set(user.userid, []);
     return true;
 }
 
 let sendMail = function (user, targetuserid, message) {
     //count mail
-    let targetMail = Db("mail").get(targetuserid, []);
+    let targetMail = Db.mail.get(targetuserid, []);
     //parse patterns
     let patternCount = 0
     targetMail.forEach(function(m) {
@@ -27,7 +27,7 @@ let sendMail = function (user, targetuserid, message) {
         "date": Date.now(),
         "message": message
     });
-    Db("mail").set(targetuserid, targetMail);
+    Db.mail.set(targetuserid, targetMail);
 
     user.mailCount++;
     setTimeout(function() {

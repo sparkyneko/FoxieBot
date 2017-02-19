@@ -1,4 +1,4 @@
-﻿"use strict";
+'use strict';
 
 class kuncGame extends Rooms.botGame {
     constructor (room, scorecap) {

@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 const http = require("http");
 
 function getData(link, callback) {
@@ -20,7 +20,7 @@ exports.commands = {
         target = toId(target);
         let lastSeen = Users.seen.get(target, null);
         if (!lastSeen) return this.send("**" + target + "** was never seen before.");
-        let seenRoom = Db("settings").get([toId(lastSeen[1], true), "isPrivate"], false) && ((!user.isDev() && !user.isStaff) || room) ? "a private room" : lastSeen[1];
+        let seenRoom = Db.settings.get([toId(lastSeen[1], true), "isPrivate"], false) && ((!user.isDev() && !user.isStaff) || room) ? "a private room" : lastSeen[1];
         this.send("**" + target + "** was last seen " + Tools.getTimeAgo(lastSeen[0]) + " ago in " + seenRoom + ".");
     },
     uptime: function(target, room, user) {

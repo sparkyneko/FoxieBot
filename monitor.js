@@ -1,5 +1,5 @@
 'use strict';
-//data is saved into Db("moderation");
+//data is saved into Db.moderation;
 const DEFAULT_MONITOR = {
     room: 40,
     user: 12,
@@ -157,26 +157,26 @@ class ResourceMonitor {
         }
         //transfer mutes, locks, bans
         if (this.isBanned[oldId]) {
-            Db("moderation").set(newId, Db("moderation").get(oldId));
+            Db.moderation.set(newId, Db("moderation").get(oldId));
         }
     }
     release(userid) {
-        if (Db("moderation").get(userid)) Db("moderation").set(userid, null);
+        if (Db.moderation.get(userid)) Db("moderation").set(userid, null);
         delete this.users[userid];
     }
     ban(userid) {
-        Db("moderation").set(userid, "ban-");
+        Db.moderation.set(userid, "ban-");
     }
     lock(userid) {
-        Db("moderation").set(userid, "lock-");
+        Db.moderation.set(userid, "lock-");
     }
     mute(userid, duration) {
         if (!duration) duration = 7;
         let release = Date.now() + (duration * 60000);
-        Db("moderation").set(userid, "mute-" + release);
+        Db.moderation.set(userid, "mute-" + release);
     }
     isBanned(userid) {
-        let moderation = Db("moderation").get(userid, null);
+        let moderation = Db.moderation.get(userid, null);
         if (moderation) {
             if (moderation.split("-")[0] === "mute") {
                 if (Date.now() >= moderation.split("-")[1]) {

@@ -115,7 +115,7 @@ global.log = function(item, text) {
 }
 
 //get the database
-global.Db = require("origindb")("config/database-" + Config.info.serverid);
+global.Db = require("nef")(require("nef-fs")("config/database-" + Config.info.serverid));
 
 
 // check for bot auth;
