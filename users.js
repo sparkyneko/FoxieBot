@@ -1,7 +1,5 @@
 'use strict';
 
-const cache_db = require("./cache-db.js");
-
 const developers = ["sparkychild", "littlevixen"];
 let Users = {};
 let users = Users.users = new Map();
