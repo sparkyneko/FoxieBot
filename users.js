@@ -36,7 +36,7 @@ class User {
     
     onLeave(room) {
         this.ranks.delete(room.id);
-        Db.set(this.userid, [Date.now(), room.name]);
+        Db.seen.set(this.userid, [Date.now(), room.name]);
     }
     
     botPromote(rank) {
