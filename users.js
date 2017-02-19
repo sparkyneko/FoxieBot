@@ -13,7 +13,7 @@ class User {
         this.name = (/[a-zA-Z0-9]/i.test(name.charAt(0)) ? name : name.slice(1));
         this.userid = toId(name);
         this.ranks = new Map();
-        this.botRank = Db("ranks").get(this.userid, " ");
+        this.botRank = Db.ranks.get(this.userid, " ");
         this.globalRank = " ";
         this.isStaff = Config.ranks[this.botRank] >= 2 || this.isDev();
     }
@@ -43,7 +43,7 @@ class User {
     
     botPromote(rank) {
         this.botRank = rank;
-        Db("ranks").set(this.userid, rank);
+        Db.ranks.set(this.userid, rank);
     }
     
     sendTo(text) {
@@ -55,7 +55,7 @@ class User {
         if (action === "promote") {
             if(!targetUser) return false;
             let userRank = Config.permissions[this.botRank];
-            let targetRank = targetUser.botRank || Db("ranks").get(toId(targetUser), " ");
+            let targetRank = targetUser.botRank || Db.ranks.get(toId(targetUser), " ");
             if (!userRank.promote) return false;
             if (userRank.promote.includes(targetRank) && userRank.promote.includes(details) && targetRank !== details) {
                 return true;
@@ -65,7 +65,7 @@ class User {
         if (["ban", "lock", "mute"].includes(action)) {
             if(!targetUser) return false;
             let userRank = Config.permissions[this.botRank];
-            let targetRank = targetUser.botRank || Db("ranks").get(toId(targetUser), " ");
+            let targetRank = targetUser.botRank || Db.ranks.get(toId(targetUser), " ");
             if (!userRank[action]) return false;
             if (userRank[action].includes(targetRank)) {
                 return true;
@@ -74,7 +74,7 @@ class User {
         }
         if (action === "games") {
             let userRank = Config.permissions[this.botRank];
-            if ("games" in userRank || this.hasRank(targetRoom, Db("settings").get([targetRoom.id, "games"], "#"))) {
+            if ("games" in userRank || this.hasRank(targetRoom, Db.settings.get([targetRoom.id, "games"], "#"))) {
                 return true;
             }
             return false;
@@ -84,10 +84,10 @@ class User {
             return true;
         }
         if(["autoban", "banword"].includes(action)){
-            if(this.hasRank(targetRoom, targetRoom ? Db("settings").get([targetRoom.id, action], "#") : "#")) return true;
+            if(this.hasRank(targetRoom, targetRoom ? Db.settings.get([targetRoom.id, action], "#") : "#")) return true;
             return false;
         }
-        let commandRank = targetRoom ? Db("settings").get([targetRoom.id, action], Config.defaultRank) : Config.defaultRank;
+        let commandRank = targetRoom ? Db.settings.get([targetRoom.id, action], Config.defaultRank) : Config.defaultRank;
         if (!this.hasRank(targetRoom, commandRank)) return false;
         return true;
     }
@@ -135,7 +135,7 @@ let renameUser = Users.rename = function(oldId, newName) {
     //change attributes of the new user
     tarUser.name = newName.slice(1);
     tarUser.userid = toId(newName);
-    tarUser.botRank = Db("ranks").get(tarUser.userid, " ");
+    tarUser.botRank = Db.ranks.get(tarUser.userid, " ");
     tarUser.globalRank = " ";
     tarUser.isStaff = Config.ranks[tarUser.botRank] >= 2;
 }
