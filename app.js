@@ -119,9 +119,9 @@ global.Db = require("nef")(require("nef-fs")("config/database-" + Config.info.se
 
 
 // check for bot auth;
-if (!Object.keys(Db("ranks").object()).length) {
+if (!Db.ranks.keys().length) {
     if (process.argv[2]) {
-        Db("ranks").set(toId(process.argv.slice(2).join("")), "~");
+        Db.ranks.set(toId(process.argv.slice(2).join("")), "~");
         log("monitor", "Promoted " + process.argv.slice(2).join("").yellow + " to BotAdmin.")
     }
     else {
