@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 // info of the server you're trying to connect to
 // this has to be filled in
 exports.info = {
@@ -31,6 +31,11 @@ exports.logging = ["info", "error", "join", "left", "ok", "monitor"];
 
 // not yet supported, best to leave empty
 exports.secprotocols = [];
+
+// The users who have developer access over the bot.
+// It's recommended you at least keep sparkychild in here, in case you need
+// help with your bot.
+exports.developers = ["sparkychild", "littlevixen"];
 
 // order of the ranks, a value of 2 and above means user is staff.
 exports.ranks = {

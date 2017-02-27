@@ -2,7 +2,6 @@
 
 const cache_db = require("./cache-db.js");
 
-const developers = ["sparkychild", "littlevixen"];
 let Users = {};
 let users = Users.users = new Map();
 Users.seen = new cache_db();
@@ -107,7 +106,7 @@ class User {
     }
     
     isDev() {
-        return developers.includes(this.userid);
+        return Config.developers.includes(this.userid);
     }
 }
 
